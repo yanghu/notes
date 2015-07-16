@@ -1,0 +1,130 @@
+Tips:
+    - Tip: You can use the   &   key in normal mode to re-execute the last
+     substitution.
+     
+
+## Magic mode
+							*/\m* */\M*
+Use of "\m" makes the pattern after it be interpreted as if 'magic' is set,
+ignoring the actual value of the 'magic' option.
+Use of "\M" makes the pattern after it be interpreted as if 'nomagic' is used.
+							*/\v* */\V*
+Use of "\v" means that in the pattern after it all ASCII characters except
+'0'-'9', 'a'-'z', 'A'-'Z' and '_' have a special meaning.  "very magic"
+
+Use of "\V" means that in the pattern after it only the backslash has a
+special meaning.  "very nomagic"
+
+needs to escape:
+    + (/\w\+, /\d\+)
+    < and > (/\<a.*\>, /\<\d\+>)
+    \d
+    \w
+    { and }  (find a six letter word: /\<\w\{6\}\>)
+        **: in very magic mode, no need to escape:
+            - /\v<\w{6}>
+    ^, $, \ 
+
+no need to escape:
+    * (.*, \<a\w*\> )
+
+
+
+notable  atoms:
+    ^ | _^  : start of line. (add _ if not at start of regex)
+    $ | _$ : end of line. 
+
+
+Overview of ordinary atoms.				*/ordinary-atom*
+More explanation and examples below, follow the links.
+
+      ordinary atom ~
+      magic   nomagic	matches ~
+|/^|	^	^	start-of-line (at start of pattern) |/zero-width|
+|/\^|	\^	\^	literal '^'
+|/\_^|	\_^	\_^	start-of-line (used anywhere) |/zero-width|
+|/$|	$	$	end-of-line (at end of pattern) |/zero-width|
+|/\$|	\$	\$	literal '$'
+|/\_$|	\_$	\_$	end-of-line (used anywhere) |/zero-width|
+|/.|	.	\.	any single character (not an end-of-line)
+|/\_.|	\_.	\_.	any single character or end-of-line
+|/\<|	\<	\<	beginning of a word |/zero-width|
+|/\>|	\>	\>	end of a word |/zero-width|
+|/\zs|	\zs	\zs	anything, sets start of match
+|/\ze|	\ze	\ze	anything, sets end of match
+|/\%^|	\%^	\%^	beginning of file |/zero-width|		*E71*
+|/\%$|	\%$	\%$	end of file |/zero-width|
+|/\%V|	\%V	\%V	inside Visual area |/zero-width|
+|/\%#|	\%#	\%#	cursor position |/zero-width|
+|/\%'m|	\%'m	\%'m	mark m position |/zero-width|
+|/\%l|	\%23l	\%23l	in line 23 |/zero-width|
+|/\%c|	\%23c	\%23c	in column 23 |/zero-width|
+|/\%v|	\%23v	\%23v	in virtual column 23 |/zero-width|
+
+
+
+
+
+#Examples
+
+  =========================================================================
+  *30* : Find  Text between HTML tags >
+
+     /\%(<\1>\)\@<=.*\%(<\/\(\w\+\)>\)\@=
+
+     OR
+
+     /\v%(\<\1\>)@<=.*%(\<\/(\w+)\>)@=
+
+     OR
+
+     /<\(\w\+\).\{-}>\zs.*\ze<\/\1>
+<
+     <level>Can I play, daddy?</level>
+  =========================================================================
+
+
+  Exercise 1.1: Inserting thousands separators into numbers.~
+
+  Visually select the following 10 lines of numbers and write a regular
+  expression that inserts a thousands separator (such as ,) to make them read
+  correctly as shown in the set below.
+
+     1
+     12
+     123
+     1,234
+     12,345
+     123,456
+     1,234,567
+     12,345,678
+     123,456,789
+     1,234,567,890
+
+  SOLUTION >
+     :'<,'>s/\d\@<=\(\(\d\{3}\)\+\d\@!\)\@=/,/g
+<
+alternative: use \ze and \zs
+
+     :'<,'>s/\v\d\zs\ze(\d{3})+\d@!/,/g
+NOTE: zero-width matching, notice that the previous search patterns searches for POSITIONs that satisfies certain pattern ( preceded by a digit, succeded by groups of 3 digits.)
+
+
+
+
+Syntax in VIM:
+
+* Atomic grouping
+    in Perl: (?>....)       (?>[1-9]?)
+    in VIM: (...)\@>         ([1-9]?)@>
+    
+
+
+# Useful regex
+
+* Matching multiple lines with line continuations(with backslash)
+
+` ^\w+=([^\n\\]|\\.)* `  (anything but newline(\n) or backslash(\), but if it's backslash follwed by something, like '\t', '\n', or something, it's okay)
+
+"this is \"bad\" "
+
