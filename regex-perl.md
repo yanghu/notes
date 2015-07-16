@@ -1,6 +1,6 @@
 2015-07-16 10:36am
 
-## Regex operations
+## Command line options
 -p: Places a printing loop around your command so that it acts on each line of standard input. It overrides the -n switch 
 
 -e: Allows you to provide the program as an argument rather than in a file. You don't want to have to create a script file for every little Perl one-liner.
@@ -29,12 +29,25 @@ s/regex/replace/i   #case insensitive match and replace
 
 ```
 
-### Modes
+### Modifiers
 Different modes 
 
     * /i: case insensitive
     * /m: multiline mode (`^` and `$` matches line start/end instead of start/end of whole string)
-    * 
+    * /s: dot matches all mode
+    * /x: free-spacing and comments mode.(spaces and comments are ignored)
+    * /o: compile only once
+
+**Dot matches all mode(single-line mode)**
+
+dots typically doesn't match new lines. so `.*` only matches the rest of the line. If it's a multiline string, `/s` mode will allow `.*` to match anything, including new lines. so `.*` becomes "rest of the content".
+
+**Enhanced line-anchor mode, a.k.a, "multiline mode" `/m`**
+
+`^` and `$` originally only matches the start and end of the whole string, and they does NOT match embedded newlines. In this mode, `^` and `$` matches the embedded newlines.
+
+Note that, `\A` and `\Z` can be used in this mode to achieve the original effect, e.g., match start/end of the whole string.
+
 
 
 ### Flavor and dialect
@@ -43,7 +56,9 @@ Different modes
     * lookbehind: (?<=)
 
 ## Perl file reading
+**read mode(chunk mode)**
 
+    * `$/` determins where the chunk ends when using `<>` to read a line from file.
     * `<>` operator gives next line of input WHEN you assign from it to a `$variable`. When reach EOF, it  returns false
     * a default variable is used (assigned the value of `<>` and being used as the target string)
 
