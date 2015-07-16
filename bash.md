@@ -21,18 +21,19 @@ done
  
 we can also change it to other things, like `IFS=$','`
 
+==============================
 **echo special characters: -e and $'string'**
 
 `echo '\n'` prints literal "\n", not a newline.
 use `echo $'\n'` will expand with backslash-escaped cahracters replaced by special characters
 or, `echo -e '\n'`, `-e` means escape sequences
 
-
+==============================
 **For loop to operate files**
 can directly use 
-```bash
+```basht
 for i in *.txt; do
     echo $i
 done
 ```
-
+==============================
