@@ -1,4 +1,4 @@
-**`$IFS` and piping `ls` output when filename has space**
+###**`$IFS` and piping `ls` output when filename has space###**
 
 when piping output of `ls` to a command that accepts filenames, consider this example
 
@@ -22,14 +22,14 @@ done
 we can also change it to other things, like `IFS=$','`
 
 ==============================
-**echo special characters: -e and $'string'**
+###**echo special characters: -e and $'string'###**
 
 `echo '\n'` prints literal "\n", not a newline.
 use `echo $'\n'` will expand with backslash-escaped cahracters replaced by special characters
 or, `echo -e '\n'`, `-e` means escape sequences
 
 ==============================
-**For loop to operate files**
+###**For loop to operate files###**
 can directly use 
 ```basht
 for i in *.txt; do
