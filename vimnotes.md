@@ -92,7 +92,8 @@ ctrl+] jumps to tag
 ========================================
 ex commands consists of a line address plus a command.
 
-`:s` : repeat last substitution
+`:s` : repeat last substitution. or use **`&`** for the same thing
+
 
 `:r` : read. append filename, or shell command. example:
 
