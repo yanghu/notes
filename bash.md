@@ -134,13 +134,16 @@ If a word begins with an unquoted "~", all of the characters up to the first unq
 * if the prefix is '+', e.g., '~+', PWD is used.
 * if it's '~-', OLDPWD is used
 * if it's a number N, e.g., '~N', element from directory stack is used.
+* use `dirs -v` (alias `d` in my zshrc) to show history directories with stack index.
 * if login name is invalid, word left unchanged. 
 
 
 ```bash
 echo ~root    #displays /var/root
 echo ~1     #displays previous folder
+dirs -v      #show dir history with stack index
 cd ~2       # go back to the directory (two steps before)
+
 ```
 
 **Parameter expansion**
