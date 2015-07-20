@@ -14,12 +14,30 @@ done
 ```bash
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
-for f in $(ls *.eml ); do
+for f in $( ls *.eml ); do
     cat $i
 done
+IFS=$SAVEIFS
 ```
  
-we can also change it to other things, like `IFS=$','`
+we can also change it to other things, like `IFS=$','`. 
+
+TIP: it's not necessary to change IFS in the previous example, we can use `for i in *.eml` instead of `for i in ( ls *.eml )`.
+
+**More about IFS**
+
+The following code will read the entire input to $line, since `IFS=` sets IFS to null and no word splitting will be done.
+
+Tip: `var=foo command` temporarily override the var for one command
+
+```
+while IFS= read -r line
+do    
+    echo $line
+done < /path_to_text_file
+```
+
+
 
 ==============================
 ###**echo special characters: -e and $'string'###**
