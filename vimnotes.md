@@ -25,6 +25,10 @@ ctrl+] jumps to tag
 
 `ge`: jump back to the end of previous word
 
+`(`/`)`: jump back/forward a sentence.
+
+`{`/`}`: jump back/forward a paragraph.
+
 `*`: search next
 
 `#`: serach previous

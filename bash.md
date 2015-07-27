@@ -14,12 +14,30 @@ done
 ```bash
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
-for f in $(ls *.eml ); do
+for f in $( ls *.eml ); do
     cat $i
 done
+IFS=$SAVEIFS
 ```
  
-we can also change it to other things, like `IFS=$','`
+we can also change it to other things, like `IFS=$','`. 
+
+TIP: it's not necessary to change IFS in the previous example, we can use `for i in *.eml` instead of `for i in ( ls *.eml )`.
+
+**More about IFS**
+
+The following code will read the entire input to $line, since `IFS=` sets IFS to null and no word splitting will be done.
+
+Tip: `var=foo command` temporarily override the var for one command
+
+```
+while IFS= read -r line
+do    
+    echo $line
+done < /path_to_text_file
+```
+
+
 
 ==============================
 ###**echo special characters: -e and $'string'**
@@ -116,13 +134,16 @@ If a word begins with an unquoted "~", all of the characters up to the first unq
 * if the prefix is '+', e.g., '~+', PWD is used.
 * if it's '~-', OLDPWD is used
 * if it's a number N, e.g., '~N', element from directory stack is used.
+* use `dirs -v` (alias `d` in my zshrc) to show history directories with stack index.
 * if login name is invalid, word left unchanged. 
 
 
 ```bash
 echo ~root    #displays /var/root
 echo ~1     #displays previous folder
+dirs -v      #show dir history with stack index
 cd ~2       # go back to the directory (two steps before)
+
 ```
 
 **Parameter expansion**
