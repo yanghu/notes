@@ -132,3 +132,21 @@ ctags -R --languages=PHP .
 ctags -R --exclude="*.js" .
 ```
 
+
+
+========================================
+# Search and jump around
+========================================
+
+## `vimgrep` and quickfix-list
+
+use `vim[grep] /regex/[g][j] {file}` to search all ocurrences in {file}. the result is in _quickfix-list_, which can be opened by `:cw`. 
+
+jump to next/previous quickfix-list item using `[q` and `]q`. (unimpared keymapping)
+
+can add mapping to automatically search word under cursor using vimgrep. the following code maps F4 to do this, search in current folder and all subfolders, and open quickfix list when done.
+
+```
+map <F4> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+
+```
